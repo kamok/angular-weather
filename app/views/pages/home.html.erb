@@ -1,6 +1,10 @@
 <h1>A demonstration of Angular JS</h1>
 
 <div ng-app="weatherApp">
-<!-- <input type="text" ng-model="data.message">
-	<h2>{{data.message}}</h2> -->
+
+	<div ng-controller="WeatherCtrl">
+		<input type = "text" ng-model="data.temperature">
+		{{data.temperature}}
+	</div>
+
 </div>
