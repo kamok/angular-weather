@@ -1,8 +1,20 @@
 angular.module('myApp', [])
-	.controller('FirstCtrl', function($scope) {
-		$scope.data = {message: 'Hello!', message2: 'Hello2!'};
+
+	app.controller('weatherCtrl', ['$scope', 'weatherYahoo', function($scope, weatherYahoo){
+		function fetchWeather(zip) {
+			weatherYahoo.getWeather(zip).then(function(data){
+				$scope.place = data;	
+			});
+		}
+		fetchWeather('10038');
+
+		$scope.findWeather = function(zip) {
+			$scope.place = '';
+			fetchWeather(zip);
+		};
+	}]);
 	
-	app.factory('myApp', ['$http', '$q' function ($http, $q){
+	app.factory('weatherYahoo', ['$http', '$q' function ($http, $q){
 		function getWeather (zip) {
 			var deferred = $q.defer();
       $http.get('https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20weather.forecast%20WHERE%20location%3D%22' + zip + '%22&format=json&diagnostics=true&callback=')
@@ -20,5 +32,4 @@ angular.module('myApp', [])
 			getWeather: getWeather
 		};
 	}]);
-
-	});
+};
