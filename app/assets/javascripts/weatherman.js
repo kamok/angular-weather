@@ -1,8 +1,8 @@
 app = angular.module('myApp', [])
 
-	app.controller('weatherCtrl', ['$scope', 'weatherYahoo', function($scope, weatherYahoo){
+	app.controller('weatherCtrl', ['$scope', 'weatherForecast', function($scope, weatherForecast){
 		function fetchWeather(zip) {
-			weatherYahoo.getWeather(zip).then(function(data){
+			weatherForecast.getWeather(zip).then(function(data){
 				$scope.place = data;	
 			});
 		}
@@ -14,12 +14,12 @@ app = angular.module('myApp', [])
 		};
 	}]);
 	
-	app.factory('weatherYahoo', ['$http', '$q', function ($http, $q){
+	app.factory('weatherForecast', ['$http', '$q', function ($http, $q){
 		function getWeather (zip) {
 			var deferred = $q.defer();
-      $http.get('https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20weather.forecast%20WHERE%20location%3D%22' + zip + '%22&format=json&diagnostics=true&callback=')
+      $http.get('https://api.forecast.io/forecast/55017c0ce854ceab1db44c34d7bb07d5/37.8267,-122.423')
       	.success(function(data){
-      		deferred.resolve(data.query.results.channel);
+      		deferred.resolve(data);
       	})
 				.error(function(err){
 					console.log('Error retrieving data');
