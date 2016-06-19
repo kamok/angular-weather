@@ -3,10 +3,9 @@ app = angular.module('myApp', [])
 	app.controller('weatherCtrl', ['$scope', 'weatherForecast', function($scope, weatherForecast){
 		function fetchWeather(zip) {
 			weatherForecast.getWeather(zip).then(function(data){
-				$scope.place = data;	
+				$scope.hashie = data;	
 			});
 		}
-		fetchWeather('10038');
 
 		$scope.findWeather = function(zip) {
 			$scope.place = ''
