@@ -31,3 +31,11 @@ app = angular.module('myApp', [])
 			getWeather: getWeather
 		};
 	}]);
+
+	app.factory('Data', function() {
+		return {message0: "This is a message inside a factory." }
+	})
+	
+	app.controller('someCtrl', function($scope,Data) {
+		$scope.data = Data, {message1: 'Hello!', message2: 'Hello2!'};
+	});
