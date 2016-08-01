@@ -40,10 +40,14 @@ app.controller("weatherCtrl", ['$scope','weatherService',
  function($scope, weatherService) {
 	function fetchWeather(locationQuery) {
 		weatherService.getGeoCode(locationQuery).then(function(geodata){
+			// console.log(geodata);
 			var geocode = geodata.results[0].geometry.location;
 			$scope.address = geodata.results[0].formatted_address;
 		weatherService.getWeather(geocode).then(function(weatherData){
 			$scope.currentTemp = weatherData.currently.temperature;
+			$scope.currentSummary = weatherData.currently.summary;
+			$scope.todayMax = weatherData.daily.data[0].temperatureMax;
+			$scope.todayMin = weatherData.daily.data[0].temperatureMin;
 			console.log(weatherData);
 		});
 		});

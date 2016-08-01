@@ -1,15 +1,32 @@
 <div ng-app="weatherApp">
 	<div class="container">
-		<h3>Get your free weather forecast today.</h3>
+
+		<h2>Ultra Forecast</h2>
 		<div ng-controller="weatherCtrl">
 			<form>
-		    <input type="text" ng-model="locationQuery" placeholder="Central Park">
-		    <input type="submit" value="Search" ng-click="findWeather(locationQuery)">
-		  </form>
-	  <p>Showing weather for: {{ address }} </p>
-		  <div>
-		    <h1>Degrees: {{ currentTemp }} F</h1>
+			<div class="form-group">
+		    <input type="text" ng-model="locationQuery" placeholder="Central Park" class="form-control">
 		  </div>
-		</div>
+		    <input type="submit" value="Search" ng-click="findWeather(locationQuery)" class="btn btn-default">
+		  </form>
+
+		<div class="row"></div>
+
+    <i>Showing weather for {{ address }} </i>
+
+			<div class="circle">
+		    <span>
+			    <div id="toy-current-temp">
+						{{ currentTemp | number:0 }}°F
+					</div>
+					{{ currentSummary }}
+					<div id="toy-max-min-temp-current">
+					{{ todayMax | number:0 }}°/{{ todayMin | number:0  }}°
+					</div>
+		    </span>
+		  </div><!-- circle -->
+
+		</div><!-- ng-controller="weatherCtrl" -->
+	
 	</div>
 </div> 
