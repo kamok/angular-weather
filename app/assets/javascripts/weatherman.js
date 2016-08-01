@@ -48,10 +48,34 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 			$scope.currentSummary = weatherData.currently.summary;
 			$scope.todayMax = weatherData.daily.data[0].temperatureMax;
 			$scope.todayMin = weatherData.daily.data[0].temperatureMin;
-			console.log(weatherData);
+			
+			var daysShown =  [0,1,2,3];
+			var dates = getDate(weatherData, daysShown);
+			$scope.forecast = buildForecast(dates);
 		});
 		});
 	};
+
+	function buildForecast(dates) {
+		var output = []
+		for (i in dates) {
+			var obj = {
+				date: dates[i]
+			}
+			output.push(obj);
+		}
+		return output;
+	};
+
+	function getDate(weatherData, daysShown) {
+		var arrayOfDates = []
+		for (i in daysShown) {
+			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000)
+			arrayOfDates.push((fullDate.getMonth() + 1) + '/' + fullDate.getDay());
+		}
+		return arrayOfDates;
+	};
+
 	$scope.findWeather = function(locationQuery) {
     fetchWeather(locationQuery);
   };
