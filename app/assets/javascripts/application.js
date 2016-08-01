@@ -16,4 +16,5 @@
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require bootstrap-sprockets
 //= require_tree .
