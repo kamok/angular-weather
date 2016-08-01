@@ -38,18 +38,18 @@ app.factory('weatherService', ['$http', '$q',
 
 app.controller("weatherCtrl", ['$scope','weatherService',
  function($scope, weatherService) {
-	function fetchWeather(zip) {
-		weatherService.getGeoCode(zip).then(function(geodata){
+	function fetchWeather(locationQuery) {
+		weatherService.getGeoCode(locationQuery).then(function(geodata){
 			var geocode = geodata.results[0].geometry.location;
+			$scope.address = geodata.results[0].formatted_address;
 		weatherService.getWeather(geocode).then(function(weatherData){
 			$scope.currentTemp = weatherData.currently.temperature;
-			$scope.zip = zip;
-			// console.log(weatherData.currently.temperature);
+			console.log(weatherData);
 		});
 		});
 	};
-	$scope.findWeather = function(zip) {
-    fetchWeather(zip);
+	$scope.findWeather = function(locationQuery) {
+    fetchWeather(locationQuery);
   };
-  fetchWeather('10038');
+  fetchWeather("Central Park");
 }]);
