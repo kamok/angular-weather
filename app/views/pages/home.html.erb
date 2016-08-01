@@ -1,14 +1,13 @@
 <div ng-app="weatherApp">
-{{2+2}}
 	<div ng-controller="weatherCtrl">
 		{{data}}
 		<form>
 	    <input type="number" ng-model="zip">
 	    <input type="submit" value="Search" ng-click="findWeather(zip)">
 	  </form>
-  <p ng-show="zip">Searching the forecasts for: {{zip}} </p>
+  <p>Showing the forecasts for: {{zip}} </p>
 	  <div>
-	    <h1>Forecast For: {{ lat }}</h1>
+	    <h1>Degrees: {{ currentTemp }}</h1>
 	  </div>
 	</div>
 
