@@ -56,8 +56,8 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 				var maxs = getMaxOrMin(weatherData, daysShown, "Max");
 				var mins = getMaxOrMin(weatherData, daysShown, "Min");
 				var summaries = getSummary(weatherData, daysShown);
-				// var icon = getIcon(weatherData, daysShown);
-				$scope.forecast = buildForecast(dates, days, maxs, mins, summaries);
+				var icon = getIcon(weatherData, daysShown);
+				$scope.forecast = buildForecast(dates, days, maxs, mins, summaries, icon);
 			});
 		});
 	};
@@ -68,7 +68,7 @@ app.controller("weatherCtrl", ['$scope','weatherService',
   fetchWeather("Central Park");
 }]);
 
-function buildForecast(dates, days, max, min, summaries) {
+function buildForecast(dates, days, max, min, summaries, icon) {
 	var output = []
 	for (i in dates) {
 		var obj = {
@@ -76,7 +76,8 @@ function buildForecast(dates, days, max, min, summaries) {
 			day: days[i],
 			max: max[i],
 			min: min[i],
-			summary: summaries[i]
+			summary: summaries[i],
+			icon: icon[i]
 		};
 		output.push(obj);
 	};
@@ -118,4 +119,28 @@ function getSummary(weatherData, daysShown) {
 		arrayOfSummaries.push(summary)
 	};
 	return arrayOfSummaries;
+};
+
+function getIcon(weatherData, daysShown) {
+	var arrayOfIcons = []
+	var forecast_to_wi_icon = {
+      "clear-day":           "day-sunny",
+      "clear-night":         "night-clear",
+      "rain":                "rain",
+      "snow":                "snow",
+      "sleet":               "hail",
+      "wind":                "strong-wind",
+      "fog":                 "fog",
+      "cloudy":              "cloudy",
+      "partly-cloudy-day":   "day-cloudy",
+      "partly-cloudy-night": "night-cloudy"
+    }
+
+	for (i in daysShown) {
+		var icon = weatherData.daily.data[i]["icon"]
+		if (icon in forecast_to_wi_icon){
+			arrayOfIcons.push(forecast_to_wi_icon[icon])
+		};
+	};
+	return arrayOfIcons;
 };
