@@ -40,7 +40,10 @@ app.controller("weatherCtrl", ['$scope','weatherService',
  function($scope, weatherService) {
 	function fetchWeather(locationQuery) {
 		weatherService.getGeoCode(locationQuery).then(function(geodata){
-			// console.log(geodata);
+			if (geodata.status != 'OK') {
+				$scope.address = "I couldn't find what you were looking for."
+				return;
+			};
 			var geocode = geodata.results[0].geometry.location;
 			$scope.address = geodata.results[0].formatted_address;
 
