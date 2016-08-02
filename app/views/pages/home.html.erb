@@ -6,13 +6,13 @@
 			<form>
 			<div class="form-group">
 		    <input type="text" ng-model="locationQuery" placeholder="Central Park" class="form-control">
-		  </div>
+		   </div>
 		    <input type="submit" value="Search" ng-click="findWeather(locationQuery)" class="btn btn-default">
 		  </form>
 
 		<div class="row"></div>
 
-    <i>Showing weather for {{ address }} </i>
+			<h2>{{ address }}</h2>
 
 			<div class="circle">
 		    <span>
@@ -37,7 +37,7 @@
 
 			 			<div class="weather-icon">
 	 		 				<i class="wi wi-{{ eachDay.icon }}"></i>
-	 		 
+
 	 		 			</div>
 
 			 			<div class="max-min-temp">

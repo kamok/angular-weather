@@ -1,5 +1,8 @@
 # angular-weather
 
 Todo:
-1. Finish basic forecast
-2. Return message in view if query for geodata is not found. eg: "CN Tower"
+Return message in view if query for geodata is not found. eg: "CN Tower"
+Replace button with automatic detection of model.length = 5 triggering the fetchweather function
+Implement this app inside heykamok.com
+Is there a maps API that returns an image per query?
+Write tests
