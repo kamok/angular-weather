@@ -51,28 +51,40 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 			
 			var daysShown =  [0,1,2,3];
 			var dates = getDate(weatherData, daysShown);
-			$scope.forecast = buildForecast(dates);
+			var day = getDay(weatherData, daysShown);
+			$scope.forecast = buildForecast(dates, day);
 		});
 		});
 	};
 
-	function buildForecast(dates) {
+	function buildForecast(dates, day) {
 		var output = []
 		for (i in dates) {
 			var obj = {
-				date: dates[i]
-			}
+				date: dates[i],
+				day: day[i]
+			};
 			output.push(obj);
-		}
+		};
 		return output;
+	};
+
+	function getDay(weatherData, daysShown) {
+		var day = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+		var arrayofDays = []
+		for (i in daysShown) {
+			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000);
+			arrayofDays.push(day[fullDate.getDay()]);
+		};
+		return arrayofDays;
 	};
 
 	function getDate(weatherData, daysShown) {
 		var arrayOfDates = []
 		for (i in daysShown) {
-			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000)
-			arrayOfDates.push((fullDate.getMonth() + 1) + '/' + fullDate.getDay());
-		}
+			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000);
+			arrayOfDates.push((fullDate.getMonth() + 1) + '/' + fullDate.getDate());
+		};
 		return arrayOfDates;
 	};
 
