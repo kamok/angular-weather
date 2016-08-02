@@ -43,7 +43,7 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 			// console.log(geodata);
 			var geocode = geodata.results[0].geometry.location;
 			$scope.address = geodata.results[0].formatted_address;
-			
+
 			weatherService.getWeather(geocode).then(function(weatherData){
 				$scope.currentTemp = Math.round(weatherData.currently.temperature);
 				$scope.currentSummary = weatherData.currently.summary;
@@ -56,6 +56,7 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 				var maxs = getMaxOrMin(weatherData, daysShown, "Max");
 				var mins = getMaxOrMin(weatherData, daysShown, "Min");
 				var summaries = getSummary(weatherData, daysShown);
+				// var icon = getIcon(weatherData, daysShown);
 				$scope.forecast = buildForecast(dates, days, maxs, mins, summaries);
 			});
 		});
