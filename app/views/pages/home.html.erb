@@ -17,11 +17,11 @@
 			<div class="circle">
 		    <span>
 			    <div id="toy-current-temp">
-						{{ currentTemp | number:0 }}°F
+						{{ currentTemp }}°F
 					</div>
 					{{ currentSummary }}
 					<div id="toy-max-min-temp-current">
-					{{ todayMax | number:0 }}°/{{ todayMin | number:0  }}°
+					<b>{{ todayMax }}°</b>/{{ todayMin }}°
 					</div>
 		    </span>
 		  </div><!-- circle -->
@@ -34,12 +34,19 @@
 			 				<p>{{ eachDay.day }}</p>
 			 				<p>{{ eachDay.date }}</p>
 			 			</div>
+
 			 			<div class="weather-icon">
+	 		 			
 	 		 			</div>
+
 			 			<div class="max-min-temp">
+			 				<b>{{ eachDay.max }}°</b>/{{ eachDay.min}}°
 			 			</div>
+
 			 			<div class="weather-summary">
+			 				{{ eachDay.summary }}
 			 			</div>
+
 			 		</div>
 			 	</div><!-- col-lg-3 -->
 			</div>

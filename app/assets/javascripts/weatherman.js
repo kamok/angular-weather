@@ -43,49 +43,22 @@ app.controller("weatherCtrl", ['$scope','weatherService',
 			// console.log(geodata);
 			var geocode = geodata.results[0].geometry.location;
 			$scope.address = geodata.results[0].formatted_address;
-		weatherService.getWeather(geocode).then(function(weatherData){
-			$scope.currentTemp = weatherData.currently.temperature;
-			$scope.currentSummary = weatherData.currently.summary;
-			$scope.todayMax = weatherData.daily.data[0].temperatureMax;
-			$scope.todayMin = weatherData.daily.data[0].temperatureMin;
 			
-			var daysShown =  [0,1,2,3];
-			var dates = getDate(weatherData, daysShown);
-			var day = getDay(weatherData, daysShown);
-			$scope.forecast = buildForecast(dates, day);
+			weatherService.getWeather(geocode).then(function(weatherData){
+				$scope.currentTemp = Math.round(weatherData.currently.temperature);
+				$scope.currentSummary = weatherData.currently.summary;
+				$scope.todayMax = Math.round(weatherData.daily.data[0].temperatureMax);
+				$scope.todayMin = Math.round(weatherData.daily.data[0].temperatureMin);
+				
+				var daysShown =  [0,1,2,3];
+				var dates = getDate(weatherData, daysShown);
+				var days = getDay(weatherData, daysShown);
+				var maxs = getMaxOrMin(weatherData, daysShown, "Max");
+				var mins = getMaxOrMin(weatherData, daysShown, "Min");
+				var summaries = getSummary(weatherData, daysShown);
+				$scope.forecast = buildForecast(dates, days, maxs, mins, summaries);
+			});
 		});
-		});
-	};
-
-	function buildForecast(dates, day) {
-		var output = []
-		for (i in dates) {
-			var obj = {
-				date: dates[i],
-				day: day[i]
-			};
-			output.push(obj);
-		};
-		return output;
-	};
-
-	function getDay(weatherData, daysShown) {
-		var day = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-		var arrayofDays = []
-		for (i in daysShown) {
-			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000);
-			arrayofDays.push(day[fullDate.getDay()]);
-		};
-		return arrayofDays;
-	};
-
-	function getDate(weatherData, daysShown) {
-		var arrayOfDates = []
-		for (i in daysShown) {
-			var fullDate = new Date(weatherData.daily.data[i]["time"]*1000);
-			arrayOfDates.push((fullDate.getMonth() + 1) + '/' + fullDate.getDate());
-		};
-		return arrayOfDates;
 	};
 
 	$scope.findWeather = function(locationQuery) {
@@ -93,3 +66,55 @@ app.controller("weatherCtrl", ['$scope','weatherService',
   };
   fetchWeather("Central Park");
 }]);
+
+function buildForecast(dates, days, max, min, summaries) {
+	var output = []
+	for (i in dates) {
+		var obj = {
+			date: dates[i],
+			day: days[i],
+			max: max[i],
+			min: min[i],
+			summary: summaries[i]
+		};
+		output.push(obj);
+	};
+	return output;
+};
+
+function getDate(weatherData, daysShown) {
+	var arrayOfDates = []
+	for (i in daysShown) {
+		var fullDate = new Date(weatherData.daily.data[i]["time"]*1000)
+		arrayOfDates.push((fullDate.getMonth() + 1) + '/' + fullDate.getDate())
+	};
+	return arrayOfDates;
+};
+
+function getDay(weatherData, daysShown) {
+	var day = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+	var arrayOfDays = []
+	for (i in daysShown) {
+		var fullDate = new Date(weatherData.daily.data[i]["time"]*1000)
+		arrayOfDays.push(day[fullDate.getDay()])
+	};
+	return arrayOfDays;
+};
+
+function getMaxOrMin(weatherData, daysShown, type) {
+	var arrayOfTemp = []
+	for (i in daysShown) {
+		var value = weatherData.daily.data[i]["temperature" + type]
+		arrayOfTemp.push(Math.round(value))
+	};
+	return arrayOfTemp;
+};
+
+function getSummary(weatherData, daysShown) {
+	var arrayOfSummaries = []
+	for (i in daysShown) {
+		var summary = weatherData.daily.data[i]["summary"]
+		arrayOfSummaries.push(summary)
+	};
+	return arrayOfSummaries;
+};
