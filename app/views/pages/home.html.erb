@@ -1,13 +1,12 @@
 <div ng-app="weatherApp">
 	<div class="container">
 
-		<h2>Ultra Forecast</h2>
+		<h2>Weatherman</h2>
 		<div ng-controller="weatherCtrl">
-			<form>
-			<div class="form-group">
-		    <input type="text" ng-model="locationQuery" placeholder="Central Park" class="form-control">
-		   </div>
-		    <input type="submit" value="Search" ng-click="findWeather(locationQuery)" class="btn btn-default">
+			<form ng-submit="findWeather(locationQuery)">
+				<div class="form-group">
+			    <input type="text" ng-model="locationQuery" placeholder="Central Park" class="form-control">
+			  </div>
 		  </form>
 
 		<div class="row"></div>
