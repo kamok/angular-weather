@@ -17,4 +17,10 @@
 //= require angular-animate
 //= require angular-resource
 //= require bootstrap-sprockets
-//= require_tree .
+
+//= require weatherman/weather.module
+//= require weatherman/weather.factory
+//= require weatherman/weather.controller
+//= require weatherman/weather.model
+
+//= require_self
